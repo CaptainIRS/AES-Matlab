@@ -1,0 +1,626 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge,IE=9,chrome=1"><meta name="generator" content="MATLAB R2020a"><title>AES Algorithm</title><style type="text/css">.rtcContent { padding: 30px; } .S0 { margin: 3px 10px 5px 4px; padding: 0px; line-height: 28.8px; min-height: 0px; white-space: pre-wrap; color: rgb(213, 80, 0); font-family: Helvetica, Arial, sans-serif; font-style: normal; font-size: 24px; font-weight: 400; text-align: left;  }
+.S1 { margin: 2px 10px 9px 4px; padding: 0px; line-height: 21px; min-height: 0px; white-space: pre-wrap; color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif; font-style: normal; font-size: 14px; font-weight: 400; text-align: left;  }
+.S2 { margin-bottom: 20px; padding-bottom: 4px;  }
+.S3 { margin: 0px; padding: 10px 0px 10px 5px; line-height: 21px; min-height: 0px; white-space: pre-wrap; color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif; font-style: normal; font-size: 14px; font-weight: 700; text-align: start;  }
+.S4 { margin: -1px 0px 0px; padding: 10px 0px 10px 7px; line-height: 21px; min-height: 0px; white-space: pre-wrap; color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif; font-style: normal; font-size: 14px; font-weight: 400; text-align: start;  }
+.S5 { margin: 3px 10px 5px 4px; padding: 0px; line-height: 20px; min-height: 0px; white-space: pre-wrap; color: rgb(60, 60, 60); font-family: Helvetica, Arial, sans-serif; font-style: normal; font-size: 20px; font-weight: 700; text-align: left;  }
+.CodeBlock { background-color: #F7F7F7; margin: 10px 0 10px 0;}
+.S6 { border-left: 1px solid rgb(233, 233, 233); border-right: 1px solid rgb(233, 233, 233); border-top: 1px solid rgb(233, 233, 233); border-bottom: 1px solid rgb(233, 233, 233); border-radius: 4px 4px 0px 0px; padding: 6px 45px 4px 13px; line-height: 17.234px; min-height: 18px; white-space: nowrap; color: rgb(0, 0, 0); font-family: Menlo, Monaco, Consolas, "Courier New", monospace; font-size: 14px;  }
+.S7 { color: rgb(64, 64, 64); padding: 10px 0px 6px 17px; background: rgb(255, 255, 255) none repeat scroll 0% 0% / auto padding-box border-box; font-family: Menlo, Monaco, Consolas, "Courier New", monospace; font-size: 14px; overflow-x: hidden; line-height: 17.234px;  }
+.S8 { border-left: 1px solid rgb(233, 233, 233); border-right: 1px solid rgb(233, 233, 233); border-top: 1px solid rgb(233, 233, 233); border-bottom: 0px none rgb(0, 0, 0); border-radius: 0px; padding: 6px 45px 0px 13px; line-height: 17.234px; min-height: 18px; white-space: nowrap; color: rgb(0, 0, 0); font-family: Menlo, Monaco, Consolas, "Courier New", monospace; font-size: 14px;  }
+.S9 { border-left: 1px solid rgb(233, 233, 233); border-right: 1px solid rgb(233, 233, 233); border-top: 0px none rgb(0, 0, 0); border-bottom: 0px none rgb(0, 0, 0); border-radius: 0px; padding: 0px 45px 0px 13px; line-height: 17.234px; min-height: 18px; white-space: nowrap; color: rgb(0, 0, 0); font-family: Menlo, Monaco, Consolas, "Courier New", monospace; font-size: 14px;  }
+.S10 { border-left: 1px solid rgb(233, 233, 233); border-right: 1px solid rgb(233, 233, 233); border-top: 0px none rgb(0, 0, 0); border-bottom: 1px solid rgb(233, 233, 233); border-radius: 0px 0px 4px 4px; padding: 0px 45px 4px 13px; line-height: 17.234px; min-height: 18px; white-space: nowrap; color: rgb(0, 0, 0); font-family: Menlo, Monaco, Consolas, "Courier New", monospace; font-size: 14px;  }
+.embeddedOutputsErrorElement {min-height: 18px; max-height: 250px; overflow: auto;}
+.embeddedOutputsErrorElement.inlineElement {}
+.embeddedOutputsErrorElement.rightPaneElement {}
+.embeddedOutputsWarningElement{min-height: 18px; max-height: 250px; overflow: auto;}
+.embeddedOutputsWarningElement.inlineElement {}
+.embeddedOutputsWarningElement.rightPaneElement {}
+.diagnosticMessage-wrapper {font-family: Menlo, Monaco, Consolas, "Courier New", monospace; font-size: 12px;}
+.diagnosticMessage-wrapper.diagnosticMessage-warningType {color: rgb(255,100,0);}
+.diagnosticMessage-wrapper.diagnosticMessage-warningType a {color: rgb(255,100,0); text-decoration: underline;}
+.diagnosticMessage-wrapper.diagnosticMessage-errorType {color: rgb(230,0,0);}
+.diagnosticMessage-wrapper.diagnosticMessage-errorType a {color: rgb(230,0,0); text-decoration: underline;}
+.diagnosticMessage-wrapper .diagnosticMessage-messagePart,.diagnosticMessage-wrapper .diagnosticMessage-causePart {white-space: pre-wrap;}
+.diagnosticMessage-wrapper .diagnosticMessage-stackPart {white-space: pre;}
+.embeddedOutputsTextElement,.embeddedOutputsVariableStringElement {white-space: pre; word-wrap: initial; min-height: 18px; max-height: 250px; overflow: auto;}
+.textElement,.rtcDataTipElement .textElement {padding-top: 3px;}
+.embeddedOutputsTextElement.inlineElement,.embeddedOutputsVariableStringElement.inlineElement {}
+.inlineElement .textElement {}
+.embeddedOutputsTextElement.rightPaneElement,.embeddedOutputsVariableStringElement.rightPaneElement {min-height: 16px;}
+.rightPaneElement .textElement {padding-top: 2px; padding-left: 9px;}
+.S11 { border-left: 1px solid rgb(233, 233, 233); border-right: 1px solid rgb(233, 233, 233); border-top: 1px solid rgb(233, 233, 233); border-bottom: 1px solid rgb(233, 233, 233); border-radius: 0px; padding: 6px 45px 4px 13px; line-height: 17.234px; min-height: 18px; white-space: nowrap; color: rgb(0, 0, 0); font-family: Menlo, Monaco, Consolas, "Courier New", monospace; font-size: 14px;  }
+.S12 { border-left: 1px solid rgb(233, 233, 233); border-right: 1px solid rgb(233, 233, 233); border-top: 0px none rgb(0, 0, 0); border-bottom: 1px solid rgb(233, 233, 233); border-radius: 0px; padding: 0px 45px 4px 13px; line-height: 17.234px; min-height: 18px; white-space: nowrap; color: rgb(0, 0, 0); font-family: Menlo, Monaco, Consolas, "Courier New", monospace; font-size: 14px;  }
+.variableValue { width: 100% !important; }
+.embeddedOutputsMatrixElement,.eoOutputWrapper .matrixElement {min-height: 18px; box-sizing: border-box;}
+.embeddedOutputsMatrixElement .matrixElement,.eoOutputWrapper .matrixElement,.rtcDataTipElement .matrixElement {position: relative;}
+.matrixElement .variableValue,.rtcDataTipElement .matrixElement .variableValue {white-space: pre; display: inline-block; vertical-align: top; overflow: hidden;}
+.embeddedOutputsMatrixElement.inlineElement {}
+.embeddedOutputsMatrixElement.inlineElement .topHeaderWrapper {display: none;}
+.embeddedOutputsMatrixElement.inlineElement .veTable .body {padding-top: 0 !important; max-height: 100px;}
+.inlineElement .matrixElement {max-height: 300px;}
+.embeddedOutputsMatrixElement.rightPaneElement {}
+.rightPaneElement .matrixElement,.rtcDataTipElement .matrixElement {overflow: hidden; padding-left: 9px;}
+.rightPaneElement .matrixElement {margin-bottom: -1px;}
+.embeddedOutputsMatrixElement .matrixElement .valueContainer,.eoOutputWrapper .matrixElement .valueContainer,.rtcDataTipElement .matrixElement .valueContainer {white-space: nowrap; margin-bottom: 3px;}
+.embeddedOutputsMatrixElement .matrixElement .valueContainer .horizontalEllipsis.hide,.embeddedOutputsMatrixElement .matrixElement .verticalEllipsis.hide,.eoOutputWrapper .matrixElement .valueContainer .horizontalEllipsis.hide,.eoOutputWrapper .matrixElement .verticalEllipsis.hide,.rtcDataTipElement .matrixElement .valueContainer .horizontalEllipsis.hide,.rtcDataTipElement .matrixElement .verticalEllipsis.hide {display: none;}
+.embeddedOutputsVariableMatrixElement .matrixElement .valueContainer.hideEllipses .verticalEllipsis, .embeddedOutputsVariableMatrixElement .matrixElement .valueContainer.hideEllipses .horizontalEllipsis {display:none;}
+.embeddedOutputsMatrixElement .matrixElement .valueContainer .horizontalEllipsis,.eoOutputWrapper .matrixElement .valueContainer .horizontalEllipsis {margin-bottom: -3px;}
+.eoOutputWrapper .embeddedOutputsVariableMatrixElement .matrixElement .valueContainer {cursor: default !important;}
+.embeddedOutputsVariableElement {white-space: pre-wrap; word-wrap: break-word; min-height: 18px; max-height: 250px; overflow: auto;}
+.variableElement {}
+.embeddedOutputsVariableElement.inlineElement {}
+.inlineElement .variableElement {}
+.embeddedOutputsVariableElement.rightPaneElement {min-height: 16px;}
+.rightPaneElement .variableElement {padding-top: 2px; padding-left: 9px;}
+.variableNameElement {margin-bottom: 3px; display: inline-block;}
+.matrixElement .horizontalEllipsis,.rtcDataTipElement .matrixElement .horizontalEllipsis {display: inline-block; margin-top: 3px; width: 30px; height: 12px; background-repeat: no-repeat; background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB0AAAAJCAYAAADO1CeCAAAAJUlEQVR42mP4//8/A70xw0i29BUDFPxnAEtTW37wWDqakIa4pQDvOOG89lHX2gAAAABJRU5ErkJggg==");}
+.matrixElement .verticalEllipsis,.textElement .verticalEllipsis,.rtcDataTipElement .matrixElement .verticalEllipsis,.rtcDataTipElement .textElement .verticalEllipsis {margin-left: 35px; width: 12px; height: 30px; background-repeat: no-repeat; background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAZCAYAAAAIcL+IAAAALklEQVR42mP4//8/AzGYgWyFMECMwv8QddRS+P//KyimlmcGUOFoOI6GI/UVAgDnd8Dd4+NCwgAAAABJRU5ErkJggg==");}
+.S13 { border-left: 1px solid rgb(233, 233, 233); border-right: 1px solid rgb(233, 233, 233); border-top: 1px solid rgb(233, 233, 233); border-bottom: 1px solid rgb(233, 233, 233); border-radius: 0px 0px 4px 4px; padding: 6px 45px 4px 13px; line-height: 17.234px; min-height: 18px; white-space: nowrap; color: rgb(0, 0, 0); font-family: Menlo, Monaco, Consolas, "Courier New", monospace; font-size: 14px;  }
+.S14 { margin: 20px 10px 5px 4px; padding: 0px; line-height: 20px; min-height: 0px; white-space: pre-wrap; color: rgb(60, 60, 60); font-family: Helvetica, Arial, sans-serif; font-style: normal; font-size: 20px; font-weight: 700; text-align: left;  }
+.S15 { border-left: 1px solid rgb(233, 233, 233); border-right: 1px solid rgb(233, 233, 233); border-top: 1px solid rgb(233, 233, 233); border-bottom: 0px none rgb(0, 0, 0); border-radius: 4px 4px 0px 0px; padding: 6px 45px 0px 13px; line-height: 17.234px; min-height: 18px; white-space: nowrap; color: rgb(0, 0, 0); font-family: Menlo, Monaco, Consolas, "Courier New", monospace; font-size: 14px;  }
+.S16 { margin: 10px 10px 9px 4px; padding: 0px; line-height: 21px; min-height: 0px; white-space: pre-wrap; color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif; font-style: normal; font-size: 14px; font-weight: 400; text-align: left;  }</style></head><body><div class = rtcContent><h1  class = 'S0' id = 'T_BA2EDA2F' ><span>AES Algorithm</span></h1><div  class = 'S1'><span></span></div><div  class = 'S1'><span>This script is an implementation of the AES Algorithm following Processing Standards Publication 197</span></div><div  class = 'S1'><a href = "https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.197.pdf"><span>Link to original paper</span></a></div><div  class = 'S2'><div  class = 'S3'><span style=' font-weight: bold;'>Table of Contents</span></div><div  class = 'S4'><a href = "#H_61F3C128"><span>Configuration
+</span></a><a href = "#H_5BF7026A"><span>Encryption
+</span></a><a href = "#H_8184ED73"><span>Decryption</span></a></div></div><div  class = 'S1'><span></span></div><h2  class = 'S5' id = 'H_61F3C128' ><span>Configuration</span></h2><div  class = 'S1'><span></span></div><div  class = 'S1'><span>Choose Key Standard: </span></div><div class="CodeBlock"><div class="inlineWrapper outputs"><div  class = 'S6'><span style="white-space: pre;"><span>keyProperties = </span></span><span>128</span></div><div  class = 'S7'><div class='variableElement' style='font-family: Menlo, Monaco, Consolas, "Courier New", monospace; font-size: 12px; '>keyProperties = 128</div></div></div><div class="inlineWrapper"><div  class = 'S8'><span style="white-space: pre;"><span>config = Config();</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">if </span><span>keyProperties == 128</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span>    config.Nk = 4;</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span>    config.Nb = 4;</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span>    config.Nr = 10;</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">elseif </span><span>keyProperties == 192</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span>    config.Nk = 6;</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span>    config.Nb = 4;</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span>    config.Nr = 12;</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">elseif </span><span>keyProperties == 256</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span>    config.Nk = 8;</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span>    config.Nb = 4;</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span>    config.Nr = 14;</span></span></div></div><div class="inlineWrapper"><div  class = 'S10'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">end</span></span></div></div></div><div  class = 'S1'><span>SBox configuration:</span></div><div class="CodeBlock"><div class="inlineWrapper outputs"><div  class = 'S6'><span style="white-space: pre;"><span>sBoxConfig = </span></span><span style="color: rgb(160, 32, 240);">"Test"</span></div><div  class = 'S7'><div class="inlineElement eoOutputWrapper embeddedOutputsVariableStringElement" uid="6DCB1FE2" contenteditable="false" data-testid="output_1" data-width="990" data-height="20" data-hashorizontaloverflow="false" style="width: 1020px; max-height: 261px;"><div class="textElement"><div><span class="variableNameElement">sBoxConfig = </span>"Test"</div></div></div></div></div><div class="inlineWrapper"><div  class = 'S8'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">if </span><span>sBoxConfig == </span><span style="color: rgb(160, 32, 240);">"Test"</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span>    config.sBox = TestSBox();</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span>    config.invSBox = TestInvSBox();</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">elseif </span><span>sBoxConfig == </span><span style="color: rgb(160, 32, 240);">"Random"</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span>    </span><span style="color: rgb(34, 139, 34);">% To change the random configuration, change the variables </span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span>    </span><span style="color: rgb(34, 139, 34);">% in SBox.m and InvSBox.m files</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span>    config.sBox = SBox();</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span>    config.invSBox = InvSBox();</span></span></div></div><div class="inlineWrapper"><div  class = 'S10'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">end</span></span></div></div></div><div  class = 'S1'><span>Enter the plaintext and cipherkey:</span></div><div class="CodeBlock"><div class="inlineWrapper outputs"><div  class = 'S6'><span style="white-space: pre;"><span>plainText = </span></span><span style="color: rgb(160, 32, 240);">"LongLonglongLongLongLongLongText"</span></div><div  class = 'S7'><div class="inlineElement eoOutputWrapper embeddedOutputsVariableStringElement" uid="676EBBCA" contenteditable="false" data-testid="output_2" style="width: 1020px; max-height: 261px;" data-width="990" data-height="20" data-hashorizontaloverflow="false"><div class="textElement"><div><span class="variableNameElement">plainText = </span>"LongLonglongLongLongLongLongText"</div></div></div></div></div><div class="inlineWrapper outputs"><div  class = 'S11'><span style="white-space: pre;"><span>cipherKey = </span></span><span style="color: rgb(160, 32, 240);">"Spider"</span></div><div  class = 'S7'><div class="inlineElement eoOutputWrapper embeddedOutputsVariableStringElement" uid="EB5545F4" contenteditable="false" data-testid="output_3" style="width: 1020px; max-height: 261px;" data-width="990" data-height="20" data-hashorizontaloverflow="false"><div class="textElement"><div><span class="variableNameElement">cipherKey = </span>"Spider"</div></div></div></div></div><div class="inlineWrapper"><div  class = 'S8'><span style="white-space: pre;"><span>textInts = uint8(char(plainText));</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span>nblocks = int32(length(textInts)) / (config.Nb * 4);</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span>npad = uint8(config.Nb * 4 </span><span style="color: rgb(0, 0, 255);">...</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span>    - (length(textInts) - config.Nb * 4 * nblocks));</span></span></div></div><div class="inlineWrapper outputs"><div  class = 'S12'><span style="white-space: pre;"><span>textInts = [textInts repmat(npad, 1, npad)]</span></span></div><div  class = 'S7'><div class="inlineElement eoOutputWrapper embeddedOutputsVariableMatrixElement" uid="C63CD0CA" contenteditable="false" data-testid="output_4" data-width="990" style="width: 1020px; white-space: normal; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;"><div class="matrixElement veSpecifier" style="white-space: normal; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;"><div class="veVariableName variableNameElement" style="width: 990px; white-space: normal; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;"><div class="headerElementClickToInteract" style="white-space: normal; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;"><span style="white-space: normal; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;">textInts = </span><span class="veVariableValueSummary headerElement" style="white-space: normal; font-style: normal; color: rgb(179, 179, 179); font-size: 12px;">1×48 uint8 row vector</span></div></div><div class="valueContainer" data-layout="{&quot;columnWidth&quot;:40,&quot;totalColumns&quot;:48,&quot;totalRows&quot;:1,&quot;charsPerColumn&quot;:6}" style="white-space: nowrap; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;"><div class="variableValue" style="width: 922px; white-space: pre; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;">    76   111   110   103    76   111   110   103   108   111   110   103    76   111   110   103    76   111   110   103    76   111   110   103    76   111   110   103    84   101   120   116    16    16    16    16    16    16    16    16    16    16    16    16    16    16    16    16
+</div><div class="horizontalEllipsis" style="white-space: nowrap; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;"></div><div class="verticalEllipsis hide" style="white-space: nowrap; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;"></div></div></div></div></div></div><div class="inlineWrapper"><div  class = 'S8'><span style="white-space: pre;"><span>keyInts = uint8(char(cipherKey));</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span>npad = uint8(config.Nk*4 - length(keyInts));</span></span></div></div><div class="inlineWrapper outputs"><div  class = 'S12'><span style="white-space: pre;"><span>keyInts = [keyInts repmat(npad, 1, npad)]</span></span></div><div  class = 'S7'><div class="inlineElement eoOutputWrapper embeddedOutputsVariableMatrixElement" uid="4F0ACB1D" contenteditable="false" data-testid="output_5" style="width: 1020px; white-space: normal; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;" data-width="990"><div class="matrixElement veSpecifier" style="white-space: normal; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;"><div class="veVariableName variableNameElement" style="width: 990px; white-space: normal; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;"><div class="headerElementClickToInteract" style="white-space: normal; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;"><span style="white-space: normal; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;">keyInts = </span><span class="veVariableValueSummary headerElement" style="white-space: normal; font-style: normal; color: rgb(179, 179, 179); font-size: 12px;">1×16 uint8 row vector</span></div></div><div class="valueContainer" data-layout="{&quot;columnWidth&quot;:40,&quot;totalColumns&quot;:16,&quot;totalRows&quot;:1,&quot;charsPerColumn&quot;:6}" style="white-space: nowrap; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;"><div class="variableValue" style="width: 642px; white-space: pre; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;">    83   112   105   100   101   114    10    10    10    10    10    10    10    10    10    10
+</div><div class="horizontalEllipsis hide" style="white-space: nowrap; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;"></div><div class="verticalEllipsis hide" style="white-space: nowrap; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;"></div></div></div></div></div></div><div class="inlineWrapper"><div  class = 'S13'><span style="white-space: pre;"><span>config.K = keyInts;</span></span></div></div></div><h2  class = 'S5' id = 'H_AA3328AE' ><span></span></h2><h2  class = 'S14' id = 'H_5BF7026A' ><span>Encryption</span></h2><div  class = 'S1'><span></span></div><div class="CodeBlock"><div class="inlineWrapper"><div  class = 'S15'><span style="white-space: pre;"><span>cipherText = [];</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">for </span><span>i = 1:(config.Nb * 4):length(textInts)</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span>    blob = Cipher( </span><span style="color: rgb(0, 0, 255);">...</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span>        textInts(i:i+config.Nb * 4-1), </span><span style="color: rgb(0, 0, 255);">...</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span>        config.K, </span><span style="color: rgb(0, 0, 255);">...</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span>        config.Nk, </span><span style="color: rgb(0, 0, 255);">...</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span>        config.Nb, </span><span style="color: rgb(0, 0, 255);">...</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span>        config.Nr </span><span style="color: rgb(0, 0, 255);">...</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span>    );</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span>    </span><span class="warning_squiggle_rte1978616638">cipherText</span><span> = [cipherText blob];</span></span></div></div><div class="inlineWrapper outputs"><div  class = 'S12'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">end</span></span></div><div  class = 'S7'><div class="inlineElement eoOutputWrapper embeddedOutputsTextElement scrollableOutput" uid="3A13D155" data-scroll-top="null" data-scroll-left="null" contenteditable="false" data-testid="output_6" style="width: 1020px; max-height: 261px;" data-width="990" data-height="3271" data-hashorizontaloverflow="false"><div class="textElement">Initial Round: 
+Inisial State  :4c 6f 6e 67 4c 6f 6e 67 6c 6f 6e 67 4c 6f 6e 67 
+FirstRoundKey  : 53 70 69 64 65 72 a a a a a a a a a a 
+State          :1f 1f 7 3 29 1d 64 6d 66 65 64 6d 46 65 64 6d 
+
+Round 1: 
+SubBytes      : c0 c0 c5 7b a5 a4 43 3c 33 4d 43 3c 5a 4d 43 3c 
+ShiftRows     : c0 a4 43 3c a5 4d 43 7b 33 4d c5 3c 5a c0 43 3c 
+InvMixColumns : 13 6a a6 c4 be 81 e3 c 48 c1 ab a5 90 38 58 15 
+RoundKey      : 35 17 e 3 50 65 4 9 5a 6f e 3 50 65 4 9 
+AddRoundKey   : 26 7d a8 c7 ee e4 e7 5 12 ae a5 a6 c0 5d 5c 1c 
+
+Round 2: 
+SubBytes      : f7 ff c2 c6 28 69 94 6b c9 e4 6 24 ba 4c 4a 9c 
+ShiftRows     : f7 69 6 9c 28 e4 4a c6 c9 4c c2 6b ba ff 94 24 
+InvMixColumns : d4 b3 2d 4e eb e3 9 41 f4 67 a7 18 c5 dc 1a f6 
+RoundKey      : 7a e5 f 50 2a 80 b 59 70 ef 5 5a 20 8a 1 53 
+AddRoundKey   : ae 56 22 1e c1 63 2 18 84 88 a2 42 e5 56 1b a5 
+
+Round 3: 
+SubBytes      : e4 b1 93 72 78 fb 77 ad 5f c4 3a 2c d9 b1 af 6 
+ShiftRows     : e4 fb 3a 6 78 c4 af 72 5f b1 93 ad d9 b1 77 2c 
+InvMixColumns : f9 41 61 fa 7a 73 6f 7 48 25 3f 82 3a 15 f2 ee 
+RoundKey      : 0 99 e2 e7 2a 19 e9 be 5a f6 ec e4 7a 7c ed b7 
+AddRoundKey   : f9 d8 83 1d 50 6a 86 b9 12 d3 d3 66 40 69 1f 59 
+
+Round 4: 
+SubBytes      : 99 61 ec a4 53 2 44 56 c9 66 66 33 9 f9 c0 cb 
+ShiftRows     : 99 2 66 cb 53 66 c0 a4 c9 f9 ec 56 9 61 44 33 
+InvMixColumns : 82 fc 11 59 68 60 59 0 23 59 9 f9 c6 34 b5 58 
+RoundKey      : 18 cc 4b 3d 32 d5 a2 83 68 23 4e 67 12 5f a3 d0 
+AddRoundKey   : 9a 30 5a 64 5a b5 fb 83 4b 7a 47 9e d4 6b 16 88 
+
+Round 5: 
+SubBytes      : b8 4 be 43 be d5 f ec b3 da a0 b 48 7f 47 c4 
+ShiftRows     : b8 d5 a0 c4 be da 47 43 b3 7f be ec 48 4 f b 
+InvMixColumns : 6b 36 61 35 16 9b 2f c2 ae 78 84 cc 98 5a 4f c5 
+RoundKey      : c7 c6 3b f4 f5 13 99 77 9d 30 d7 10 8f 6f 74 c0 
+AddRoundKey   : ac f0 5a c1 e3 88 b6 b5 33 48 53 dc 17 35 3b 5 
+
+Round 6: 
+SubBytes      : 91 8c be 78 11 c4 4e d5 c3 52 ed 86 f0 96 e2 6b 
+ShiftRows     : 91 c4 ed 6b 11 52 e2 78 c3 96 be d5 f0 8c 4e 86 
+InvMixColumns : e8 45 29 57 4e f0 14 73 57 f8 56 c7 bc a7 71 de 
+RoundKey      : 4f 54 81 87 ba 47 18 f0 27 77 cf e0 a8 18 bb 20 
+AddRoundKey   : a7 11 a8 d0 f4 b7 c 83 70 8f 99 27 14 bf ca fe 
+
+Round 7: 
+SubBytes      : 5c 82 c2 70 bf a9 fe ec 51 73 ee cc fa 8 74 bb 
+ShiftRows     : 5c a9 ee bb bf 73 74 70 51 8 c2 ec fa 82 fe cc 
+InvMixColumns : d 87 e4 ce f4 b5 b4 3d 94 f0 e9 fa 40 30 d0 ea 
+RoundKey      : a2 be 36 45 18 f9 2e b5 3f 8e e1 55 97 96 5a 75 
+AddRoundKey   : af 39 d2 8b ec 4c 9a 88 ab 7e 8 af d7 a6 8a 9f 
+
+Round 8: 
+SubBytes      : 79 12 b5 3d ce 29 b8 c4 62 f3 30 79 e 24 7e db 
+ShiftRows     : 79 29 30 db ce f3 7e 3d 62 24 b5 c4 e 12 b8 79 
+InvMixColumns : 62 a0 46 3f ca 8c 86 be d9 2a 60 a4 eb 80 fc 4a 
+RoundKey      : b2 0 ab cd aa f9 85 78 95 77 64 2d 2 e1 3e 58 
+AddRoundKey   : d0 a0 ed f2 60 75 3 c6 4c 5d 4 89 e9 61 c2 12 
+
+Round 9: 
+SubBytes      : 70 e0 55 89 d0 9d 7b b4 29 4c f2 a7 1e ef 25 c9 
+ShiftRows     : 70 9d f2 c9 d0 4c 25 89 29 ef 55 b4 1e e0 7b a7 
+InvMixColumns : 67 95 52 76 c3 ae 56 b 99 a7 ab b2 db ef fa ec 
+RoundKey      : 51 b2 c1 ba fb 4b 44 c2 6e 3c 20 ef 6c dd 1e b7 
+AddRoundKey   : 36 27 93 cc 38 e5 12 c9 f7 9b 8b 5d b7 32 e4 5b 
+
+Final Round:
+SubBytes      : 5 cc dc 4b 7 d9 c9 dd 68 14 3d 4c a9 23 69 39 
+ShiftRows     : 5 d9 3d 39 7 14 69 4b 68 23 dc dd a9 cc c9 4c 
+RoundKey      : a6 c0 68 ea 5d 8b 2c 28 33 b7 c c7 5f 6a 12 70 
+AddRoundKey   : a3 19 55 d3 5a 9f 45 63 5b 94 d0 1a f6 a6 db 3c 
+
+Final State   : a3 19 55 d3 5a 9f 45 63 5b 94 d0 1a f6 a6 db 3c 
+
+Initial Round: 
+Inisial State  :4c 6f 6e 67 4c 6f 6e 67 4c 6f 6e 67 54 65 78 74 
+FirstRoundKey  : 53 70 69 64 65 72 a a a a a a a a a a 
+State          :1f 1f 7 3 29 1d 64 6d 46 65 64 6d 5e 6f 72 7e 
+
+Round 1: 
+SubBytes      : c0 c0 c5 7b a5 a4 43 3c 5a 4d 43 3c 58 a8 40 f3 
+ShiftRows     : c0 a4 43 f3 a5 4d 40 7b 5a a8 c5 3c 58 c0 43 3c 
+InvMixColumns : dc a5 ec 41 bd 84 e5 f ae 79 27 fb 94 3a 5a 13 
+RoundKey      : 35 17 e 3 50 65 4 9 5a 6f e 3 50 65 4 9 
+AddRoundKey   : e9 b2 e2 42 ed e1 e1 6 f4 16 29 f8 c4 5f 5e 1a 
+
+Round 2: 
+SubBytes      : 1e 37 98 2c 55 f8 f8 6f bf 47 a5 41 1c cf 58 a2 
+ShiftRows     : 1e f8 a5 a2 55 47 58 2c bf cf 98 6f 1c 37 f8 41 
+InvMixColumns : 28 a3 4a 20 17 1f d6 b8 d8 e6 ea 53 d8 20 3 69 
+RoundKey      : 7a e5 f 50 2a 80 b 59 70 ef 5 5a 20 8a 1 53 
+AddRoundKey   : 52 46 45 70 3d 9f dd e1 a8 9 ef 9 f8 aa 2 3a 
+
+Round 3: 
+SubBytes      : 0 5a 6e 51 27 db c1 f8 c2 1 df 1 41 ac 77 80 
+ShiftRows     : 0 db df 80 27 1 77 51 c2 ac 6e f8 41 5a c1 1 
+InvMixColumns : 29 57 e5 1f 6b ed 3b bd e6 cb a1 74 ac ac 81 5a 
+RoundKey      : 0 99 e2 e7 2a 19 e9 be 5a f6 ec e4 7a 7c ed b7 
+AddRoundKey   : 29 ce 7 f8 41 f4 d2 3 bc 3d 4d 90 d6 d0 6c ed 
+
+Round 4: 
+SubBytes      : a5 8b c5 41 83 bf b5 7b 65 27 e3 60 f6 70 50 55 
+ShiftRows     : a5 bf e3 55 83 27 50 41 65 70 c5 7b f6 8b b5 60 
+InvMixColumns : 3d ab 38 2 65 7c c7 6b e4 aa 9 ec a4 5f ac ff 
+RoundKey      : 18 cc 4b 3d 32 d5 a2 83 68 23 4e 67 12 5f a3 d0 
+AddRoundKey   : 25 67 73 3f 57 a9 65 e8 8c 89 47 8b b6 0 f 2f 
+
+Round 5: 
+SubBytes      : 3f 85 8f 75 5b d3 4d 9b 64 a7 a0 3d 4e 63 76 15 
+ShiftRows     : 3f d3 a0 15 5b a7 76 75 64 63 8f 9b 4e 85 4d 3d 
+InvMixColumns : a5 6c 88 18 47 e1 8f d6 79 b3 b4 6d 78 b5 16 60 
+RoundKey      : c7 c6 3b f4 f5 13 99 77 9d 30 d7 10 8f 6f 74 c0 
+AddRoundKey   : 62 aa b3 ec b2 f2 16 a1 e4 83 63 7d f7 da 62 a0 
+
+Round 6: 
+SubBytes      : aa ac 6d ce 37 89 47 32 69 ec fb ff 68 57 aa e0 
+ShiftRows     : aa 89 fb e0 37 ec aa ce 69 57 6d 32 68 ac 47 ff 
+InvMixColumns : d4 55 f5 4c 25 df dd 98 74 42 b2 e5 87 1d 50 b6 
+RoundKey      : 4f 54 81 87 ba 47 18 f0 27 77 cf e0 a8 18 bb 20 
+AddRoundKey   : 9b 1 74 cb 9f 98 c5 68 53 35 7d 5 2f 5 eb 96 
+
+Round 7: 
+SubBytes      : 14 7c 92 1f db 46 a6 45 ed 96 ff 6b 15 6b e9 90 
+ShiftRows     : 14 46 ff 90 db 96 e9 1f ed 6b 92 45 15 7c a6 6b 
+InvMixColumns : 8d 12 1c be fa d3 a5 37 ab d3 76 5f 63 77 83 33 
+RoundKey      : a2 be 36 45 18 f9 2e b5 3f 8e e1 55 97 96 5a 75 
+AddRoundKey   : 2f ac 2a fb e2 2a 8b 82 94 5d 97 a f4 e1 d9 46 
+
+Round 8: 
+SubBytes      : 15 91 e5 f 98 e5 3d 13 22 4c 88 67 bf f8 35 5a 
+ShiftRows     : 15 e5 88 5a 98 4c 35 f 22 f8 e5 13 bf 91 3d 67 
+InvMixColumns : cc 1d 15 e6 c5 50 af d4 a1 ee 3e 5d 97 a6 fd b8 
+RoundKey      : b2 0 ab cd aa f9 85 78 95 77 64 2d 2 e1 3e 58 
+AddRoundKey   : 7e 1d be 2b 6f a9 2a ac 34 99 5a 70 95 47 c3 e0 
+
+Round 9: 
+SubBytes      : f3 a4 ae f1 a8 d3 e5 91 18 ee be 51 2a a0 2e e1 
+ShiftRows     : f3 d3 be e1 a8 ee 2e f1 18 a0 ae 91 2a a4 e5 51 
+InvMixColumns : cc 76 7f ba bd ec 12 da f4 3b 57 1f 17 1c ac 9d 
+RoundKey      : 51 b2 c1 ba fb 4b 44 c2 6e 3c 20 ef 6c dd 1e b7 
+AddRoundKey   : 9d c4 be 0 46 a7 56 18 9a 7 77 f0 7b c1 b2 2a 
+
+Final Round:
+SubBytes      : 5e 1c ae 63 5a 5c b1 ad b8 c5 f5 8c 21 78 37 e5 
+ShiftRows     : 5e 5c f5 e5 5a c5 37 63 b8 78 ae ad 21 1c b1 8c 
+RoundKey      : a6 c0 68 ea 5d 8b 2c 28 33 b7 c c7 5f 6a 12 70 
+AddRoundKey   : f8 9c 9d f 7 4e 1b 4b 8b cf a2 6a 7e 76 a3 fc 
+
+Final State   : f8 9c 9d f 7 4e 1b 4b 8b cf a2 6a 7e 76 a3 fc 
+
+Initial Round: 
+Inisial State  :10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 
+FirstRoundKey  : 53 70 69 64 65 72 a a a a a a a a a a 
+State          :43 60 79 74 75 62 1a 1a 1a 1a 1a 1a 1a 1a 1a 1a 
+
+Round 1: 
+SubBytes      : 1a d0 b6 92 9d aa a2 a2 a2 a2 a2 a2 a2 a2 a2 a2 
+ShiftRows     : 1a aa a2 a2 9d a2 a2 92 a2 a2 b6 a2 a2 d0 a2 a2 
+InvMixColumns : d1 a 12 79 ec ad cd 83 b6 9e 8a b6 34 46 d0 d0 
+RoundKey      : 35 17 e 3 50 65 4 9 5a 6f e 3 50 65 4 9 
+AddRoundKey   : e4 1d 1c 7a bc c8 c9 8a ec f1 84 b5 64 23 d4 d9 
+
+Round 2: 
+SubBytes      : 69 a4 9c da 65 e8 dd 7e ce a1 5f d5 43 26 48 35 
+ShiftRows     : 69 e8 5f 35 65 a1 48 da ce 26 9c 7e 43 a4 dd d5 
+InvMixColumns : 9b 76 60 66 a0 3e 21 e9 f 43 49 f 79 b9 22 d 
+RoundKey      : 7a e5 f 50 2a 80 b 59 70 ef 5 5a 20 8a 1 53 
+AddRoundKey   : e1 93 6f 36 8a be 2a b0 7f ac 4c 55 59 33 23 5e 
+
+Round 3: 
+SubBytes      : f8 dc a8 5 7e ae e5 e7 d2 91 29 fc cb c3 26 58 
+ShiftRows     : f8 ae 29 58 7e 91 26 5 d2 c3 a8 e7 cb dc e5 fc 
+InvMixColumns : 73 9c ec 24 77 28 ac 3f ae 4b 68 d3 eb a0 d9 9c 
+RoundKey      : 0 99 e2 e7 2a 19 e9 be 5a f6 ec e4 7a 7c ed b7 
+AddRoundKey   : 73 5 e c3 5d 31 45 81 f4 bd 84 37 91 dc 34 2b 
+
+Round 4: 
+SubBytes      : 8f 6b ab 2e 4c c7 6e c bf 7a 5f 9a 81 86 18 f1 
+ShiftRows     : 8f c7 5f f1 4c 7a 18 2e bf 86 ab c 81 6b 6e 9a 
+InvMixColumns : f9 a fe eb 20 be 74 ea 53 42 60 ef 50 7f 83 b2 
+RoundKey      : 18 cc 4b 3d 32 d5 a2 83 68 23 4e 67 12 5f a3 d0 
+AddRoundKey   : e1 c6 b5 d6 12 6b d6 69 3b 61 2e 88 42 20 20 62 
+
+Round 5: 
+SubBytes      : f8 b4 d5 f6 c9 7f f6 f9 e2 ef 31 c4 2c b7 b7 aa 
+ShiftRows     : f8 7f 31 aa c9 ef b7 f6 e2 b7 d5 f9 2c b4 f6 c4 
+InvMixColumns : f1 ff 0 12 e2 38 52 ef 31 a f4 b6 ad 9a 38 a5 
+RoundKey      : c7 c6 3b f4 f5 13 99 77 9d 30 d7 10 8f 6f 74 c0 
+AddRoundKey   : 36 39 3b e6 17 2b cb 98 ac 3a 23 a6 22 f5 4c 65 
+
+Round 6: 
+SubBytes      : 5 12 e2 8e f0 f1 1f 46 91 80 26 24 93 e6 29 4d 
+ShiftRows     : 5 f1 26 4d f0 80 29 8e 91 e6 e2 46 93 12 1f 24 
+InvMixColumns : 69 db 6f 42 c7 1e ab a5 ac 3d 62 20 30 b2 d3 eb 
+RoundKey      : 4f 54 81 87 ba 47 18 f0 27 77 cf e0 a8 18 bb 20 
+AddRoundKey   : 26 8f ee c5 7d 59 b3 55 8b 4a ad c0 98 aa 68 cb 
+
+Round 7: 
+SubBytes      : f7 73 28 a6 ff cb 6d fc 3d d6 95 ba 46 ac 45 1f 
+ShiftRows     : f7 cb 95 1f ff d6 45 a6 3d ac 28 fc 46 73 6d ba 
+InvMixColumns : 39 c1 2c 62 67 21 52 de 41 fa de 20 ce ad 3a bb 
+RoundKey      : a2 be 36 45 18 f9 2e b5 3f 8e e1 55 97 96 5a 75 
+AddRoundKey   : 9b 7f 1a 27 7f d8 7c 6b 7e 74 3f 75 59 3b 60 ce 
+
+Round 8: 
+SubBytes      : 14 d2 a2 cc d2 61 10 7f f3 92 75 9d cb e2 d0 8b 
+ShiftRows     : 14 61 75 8b d2 92 d0 cc f3 e2 a2 7f cb d2 10 9d 
+InvMixColumns : 75 c2 19 25 e 4a b4 ac 1d ae cf b0 6d d9 85 a5 
+RoundKey      : b2 0 ab cd aa f9 85 78 95 77 64 2d 2 e1 3e 58 
+AddRoundKey   : c7 c2 b2 e8 a4 b3 31 d4 88 d9 ab 9d 6f 38 bb fd 
+
+Round 9: 
+SubBytes      : c6 25 37 9b 49 6d c7 48 c4 35 62 5e a8 7 ea 54 
+ShiftRows     : c6 6d 62 54 49 35 ea 9b c4 7 37 48 a8 25 c7 5e 
+InvMixColumns : 16 ee 93 f6 bc 9d 5 29 e5 db 75 f7 bd ee fa bd 
+RoundKey      : 51 b2 c1 ba fb 4b 44 c2 6e 3c 20 ef 6c dd 1e b7 
+AddRoundKey   : 47 5c 52 4c 47 d6 41 eb 8b e7 55 18 d1 33 e4 a 
+
+Final Round:
+SubBytes      : a0 4a 0 29 a0 f6 83 e9 3d 94 fc ad 3e c3 69 67 
+ShiftRows     : a0 f6 fc 67 a0 94 69 29 3d c3 0 e9 3e 4a 83 ad 
+RoundKey      : a6 c0 68 ea 5d 8b 2c 28 33 b7 c c7 5f 6a 12 70 
+AddRoundKey   : 6 36 94 8d fd 1f 45 1 e 74 c 2e 61 20 91 dd 
+
+Final State   : 6 36 94 8d fd 1f 45 1 e 74 c 2e 61 20 91 dd </div></div></div></div><div class="inlineWrapper outputs"><div  class = 'S11'><span style="white-space: pre;"><span>display(cipherText);</span></span></div><div  class = 'S7'><div class="inlineElement eoOutputWrapper embeddedOutputsVariableMatrixElement" uid="1497511F" contenteditable="false" data-testid="output_7" style="width: 1020px; white-space: normal; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;" data-width="990"><div class="matrixElement veSpecifier" style="white-space: normal; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;"><div class="veVariableName variableNameElement" style="width: 990px; white-space: normal; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;"><div class="headerElementClickToInteract" style="white-space: normal; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;"><span style="white-space: normal; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;">cipherText = </span><span class="veVariableValueSummary headerElement" style="white-space: normal; font-style: normal; color: rgb(179, 179, 179); font-size: 12px;">4×12 int16 matrix</span></div></div><div class="valueContainer" data-layout="{&quot;columnWidth&quot;:40,&quot;totalColumns&quot;:12,&quot;totalRows&quot;:4,&quot;charsPerColumn&quot;:6}" style="white-space: nowrap; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;"><div class="variableValue" style="width: 482px; white-space: pre; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;">   163    90    91   246   248     7   139   126     6   253    14    97
+    25   159   148   166   156    78   207   118    54    31   116    32
+    85    69   208   219   157    27   162   163   148    69    12   145
+   211    99    26    60    15    75   106   252   141     1    46   221
+</div><div class="horizontalEllipsis hide" style="white-space: nowrap; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;"></div><div class="verticalEllipsis hide" style="white-space: nowrap; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;"></div></div></div></div></div></div></div><h2  class = 'S5' id = 'H_BCB88D21' ><span></span></h2><h2  class = 'S14' id = 'H_8184ED73' ><span>Decryption</span></h2><div  class = 'S1'><span></span></div><div class="CodeBlock"><div class="inlineWrapper"><div  class = 'S15'><span style="white-space: pre;"><span>decryptedInts = []; </span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">for </span><span>i = 1:(config.Nb * 4):length(textInts)</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span>    decryptedBlob = InvCipher( </span><span style="color: rgb(0, 0, 255);">...</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span>        cipherText(i:i+config.Nb * 4-1), </span><span style="color: rgb(0, 0, 255);">...</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span>        config.K, </span><span style="color: rgb(0, 0, 255);">...</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span>        config.Nk, </span><span style="color: rgb(0, 0, 255);">...</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span>        config.Nb, </span><span style="color: rgb(0, 0, 255);">...</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span>        config.Nr </span><span style="color: rgb(0, 0, 255);">...</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span>    );</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span>    </span><span class="warning_squiggle_rte1978616638">decryptedInts</span><span> = [decryptedInts decryptedBlob];</span></span></div></div><div class="inlineWrapper outputs"><div  class = 'S12'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">end</span></span></div><div  class = 'S7'><div class="inlineElement eoOutputWrapper embeddedOutputsTextElement scrollableOutput" uid="2E2AC800" data-scroll-top="400" data-scroll-left="0" contenteditable="false" data-testid="output_8" style="width: 1020px; max-height: 261px;" data-width="990" data-height="3271" data-hashorizontaloverflow="false"><div class="textElement">Initial Round: 
+Inisial State  :a3 19 55 d3 5a 9f 45 63 5b 94 d0 1a f6 a6 db 3c 
+FirstRoundKey  : a6 c0 68 ea 5d 8b 2c 28 33 b7 c c7 5f 6a 12 70 
+State          :5 d9 3d 39 7 14 69 4b 68 23 dc dd a9 cc c9 4c 
+
+Round 1: 
+InvShiftRows  : 5 cc dc 4b 7 d9 c9 dd 68 14 3d 4c a9 23 69 39 
+InvSubBytes   : 36 27 93 cc 38 e5 12 c9 f7 9b 8b 5d b7 32 e4 5b 
+RoundKey      : 51 fb 6e 6c b2 4b 3c dd c1 44 20 1e ba c2 ef b7 
+AddRoundKey   : 67 95 52 76 c3 ae 56 b 99 a7 ab b2 db ef fa ec 
+InvMixColumns : 70 9d f2 c9 d0 4c 25 89 29 ef 55 b4 1e e0 7b a7 
+
+Round 2: 
+InvShiftRows  : 70 e0 55 89 d0 9d 7b b4 29 4c f2 a7 1e ef 25 c9 
+InvSubBytes   : d0 a0 ed f2 60 75 3 c6 4c 5d 4 89 e9 61 c2 12 
+RoundKey      : b2 aa 95 2 0 f9 77 e1 ab 85 64 3e cd 78 2d 58 
+AddRoundKey   : 62 a0 46 3f ca 8c 86 be d9 2a 60 a4 eb 80 fc 4a 
+InvMixColumns : 79 29 30 db ce f3 7e 3d 62 24 b5 c4 e 12 b8 79 
+
+Round 3: 
+InvShiftRows  : 79 12 b5 3d ce 29 b8 c4 62 f3 30 79 e 24 7e db 
+InvSubBytes   : af 39 d2 8b ec 4c 9a 88 ab 7e 8 af d7 a6 8a 9f 
+RoundKey      : a2 18 3f 97 be f9 8e 96 36 2e e1 5a 45 b5 55 75 
+AddRoundKey   : d 87 e4 ce f4 b5 b4 3d 94 f0 e9 fa 40 30 d0 ea 
+InvMixColumns : 5c a9 ee bb bf 73 74 70 51 8 c2 ec fa 82 fe cc 
+
+Round 4: 
+InvShiftRows  : 5c 82 c2 70 bf a9 fe ec 51 73 ee cc fa 8 74 bb 
+InvSubBytes   : a7 11 a8 d0 f4 b7 c 83 70 8f 99 27 14 bf ca fe 
+RoundKey      : 4f ba 27 a8 54 47 77 18 81 18 cf bb 87 f0 e0 20 
+AddRoundKey   : e8 45 29 57 4e f0 14 73 57 f8 56 c7 bc a7 71 de 
+InvMixColumns : 91 c4 ed 6b 11 52 e2 78 c3 96 be d5 f0 8c 4e 86 
+
+Round 5: 
+InvShiftRows  : 91 8c be 78 11 c4 4e d5 c3 52 ed 86 f0 96 e2 6b 
+InvSubBytes   : ac f0 5a c1 e3 88 b6 b5 33 48 53 dc 17 35 3b 5 
+RoundKey      : c7 f5 9d 8f c6 13 30 6f 3b 99 d7 74 f4 77 10 c0 
+AddRoundKey   : 6b 36 61 35 16 9b 2f c2 ae 78 84 cc 98 5a 4f c5 
+InvMixColumns : b8 d5 a0 c4 be da 47 43 b3 7f be ec 48 4 f b 
+
+Round 6: 
+InvShiftRows  : b8 4 be 43 be d5 f ec b3 da a0 b 48 7f 47 c4 
+InvSubBytes   : 9a 30 5a 64 5a b5 fb 83 4b 7a 47 9e d4 6b 16 88 
+RoundKey      : 18 32 68 12 cc d5 23 5f 4b a2 4e a3 3d 83 67 d0 
+AddRoundKey   : 82 fc 11 59 68 60 59 0 23 59 9 f9 c6 34 b5 58 
+InvMixColumns : 99 2 66 cb 53 66 c0 a4 c9 f9 ec 56 9 61 44 33 
+
+Round 7: 
+InvShiftRows  : 99 61 ec a4 53 2 44 56 c9 66 66 33 9 f9 c0 cb 
+InvSubBytes   : f9 d8 83 1d 50 6a 86 b9 12 d3 d3 66 40 69 1f 59 
+RoundKey      : 0 2a 5a 7a 99 19 f6 7c e2 e9 ec ed e7 be e4 b7 
+AddRoundKey   : f9 41 61 fa 7a 73 6f 7 48 25 3f 82 3a 15 f2 ee 
+InvMixColumns : e4 fb 3a 6 78 c4 af 72 5f b1 93 ad d9 b1 77 2c 
+
+Round 8: 
+InvShiftRows  : e4 b1 93 72 78 fb 77 ad 5f c4 3a 2c d9 b1 af 6 
+InvSubBytes   : ae 56 22 1e c1 63 2 18 84 88 a2 42 e5 56 1b a5 
+RoundKey      : 7a 2a 70 20 e5 80 ef 8a f b 5 1 50 59 5a 53 
+AddRoundKey   : d4 b3 2d 4e eb e3 9 41 f4 67 a7 18 c5 dc 1a f6 
+InvMixColumns : f7 69 6 9c 28 e4 4a c6 c9 4c c2 6b ba ff 94 24 
+
+Round 9: 
+InvShiftRows  : f7 ff c2 c6 28 69 94 6b c9 e4 6 24 ba 4c 4a 9c 
+InvSubBytes   : 26 7d a8 c7 ee e4 e7 5 12 ae a5 a6 c0 5d 5c 1c 
+RoundKey      : 35 50 5a 50 17 65 6f 65 e 4 e 4 3 9 3 9 
+AddRoundKey   : 13 6a a6 c4 be 81 e3 c 48 c1 ab a5 90 38 58 15 
+InvMixColumns : c0 a4 43 3c a5 4d 43 7b 33 4d c5 3c 5a c0 43 3c 
+
+Final Round:
+InvShiftRows : c0 c0 c5 7b a5 a4 43 3c 33 4d 43 3c 5a 4d 43 3c 
+InvSubBytes  : 1f 1f 7 3 29 1d 64 6d 66 65 64 6d 46 65 64 6d 
+RoundKey     : 53 70 69 64 65 72 a a a a a a a a a a 1f 1f 7 3 29 1d 64 6d 66 65 64 6d 46 65 64 6d 
+AddRoundKey  : 4c 6f 6e 67 4c 6f 6e 67 6c 6f 6e 67 4c 6f 6e 67 
+
+Final State   : 4c 6f 6e 67 4c 6f 6e 67 6c 6f 6e 67 4c 6f 6e 67 
+
+Initial Round: 
+Inisial State  :f8 9c 9d f 7 4e 1b 4b 8b cf a2 6a 7e 76 a3 fc 
+FirstRoundKey  : a6 c0 68 ea 5d 8b 2c 28 33 b7 c c7 5f 6a 12 70 
+State          :5e 5c f5 e5 5a c5 37 63 b8 78 ae ad 21 1c b1 8c 
+
+Round 1: 
+InvShiftRows  : 5e 1c ae 63 5a 5c b1 ad b8 c5 f5 8c 21 78 37 e5 
+InvSubBytes   : 9d c4 be 0 46 a7 56 18 9a 7 77 f0 7b c1 b2 2a 
+RoundKey      : 51 fb 6e 6c b2 4b 3c dd c1 44 20 1e ba c2 ef b7 
+AddRoundKey   : cc 76 7f ba bd ec 12 da f4 3b 57 1f 17 1c ac 9d 
+InvMixColumns : f3 d3 be e1 a8 ee 2e f1 18 a0 ae 91 2a a4 e5 51 
+
+Round 2: 
+InvShiftRows  : f3 a4 ae f1 a8 d3 e5 91 18 ee be 51 2a a0 2e e1 
+InvSubBytes   : 7e 1d be 2b 6f a9 2a ac 34 99 5a 70 95 47 c3 e0 
+RoundKey      : b2 aa 95 2 0 f9 77 e1 ab 85 64 3e cd 78 2d 58 
+AddRoundKey   : cc 1d 15 e6 c5 50 af d4 a1 ee 3e 5d 97 a6 fd b8 
+InvMixColumns : 15 e5 88 5a 98 4c 35 f 22 f8 e5 13 bf 91 3d 67 
+
+Round 3: 
+InvShiftRows  : 15 91 e5 f 98 e5 3d 13 22 4c 88 67 bf f8 35 5a 
+InvSubBytes   : 2f ac 2a fb e2 2a 8b 82 94 5d 97 a f4 e1 d9 46 
+RoundKey      : a2 18 3f 97 be f9 8e 96 36 2e e1 5a 45 b5 55 75 
+AddRoundKey   : 8d 12 1c be fa d3 a5 37 ab d3 76 5f 63 77 83 33 
+InvMixColumns : 14 46 ff 90 db 96 e9 1f ed 6b 92 45 15 7c a6 6b 
+
+Round 4: 
+InvShiftRows  : 14 7c 92 1f db 46 a6 45 ed 96 ff 6b 15 6b e9 90 
+InvSubBytes   : 9b 1 74 cb 9f 98 c5 68 53 35 7d 5 2f 5 eb 96 
+RoundKey      : 4f ba 27 a8 54 47 77 18 81 18 cf bb 87 f0 e0 20 
+AddRoundKey   : d4 55 f5 4c 25 df dd 98 74 42 b2 e5 87 1d 50 b6 
+InvMixColumns : aa 89 fb e0 37 ec aa ce 69 57 6d 32 68 ac 47 ff 
+
+Round 5: 
+InvShiftRows  : aa ac 6d ce 37 89 47 32 69 ec fb ff 68 57 aa e0 
+InvSubBytes   : 62 aa b3 ec b2 f2 16 a1 e4 83 63 7d f7 da 62 a0 
+RoundKey      : c7 f5 9d 8f c6 13 30 6f 3b 99 d7 74 f4 77 10 c0 
+AddRoundKey   : a5 6c 88 18 47 e1 8f d6 79 b3 b4 6d 78 b5 16 60 
+InvMixColumns : 3f d3 a0 15 5b a7 76 75 64 63 8f 9b 4e 85 4d 3d 
+
+Round 6: 
+InvShiftRows  : 3f 85 8f 75 5b d3 4d 9b 64 a7 a0 3d 4e 63 76 15 
+InvSubBytes   : 25 67 73 3f 57 a9 65 e8 8c 89 47 8b b6 0 f 2f 
+RoundKey      : 18 32 68 12 cc d5 23 5f 4b a2 4e a3 3d 83 67 d0 
+AddRoundKey   : 3d ab 38 2 65 7c c7 6b e4 aa 9 ec a4 5f ac ff 
+InvMixColumns : a5 bf e3 55 83 27 50 41 65 70 c5 7b f6 8b b5 60 
+
+Round 7: 
+InvShiftRows  : a5 8b c5 41 83 bf b5 7b 65 27 e3 60 f6 70 50 55 
+InvSubBytes   : 29 ce 7 f8 41 f4 d2 3 bc 3d 4d 90 d6 d0 6c ed 
+RoundKey      : 0 2a 5a 7a 99 19 f6 7c e2 e9 ec ed e7 be e4 b7 
+AddRoundKey   : 29 57 e5 1f 6b ed 3b bd e6 cb a1 74 ac ac 81 5a 
+InvMixColumns : 0 db df 80 27 1 77 51 c2 ac 6e f8 41 5a c1 1 
+
+Round 8: 
+InvShiftRows  : 0 5a 6e 51 27 db c1 f8 c2 1 df 1 41 ac 77 80 
+InvSubBytes   : 52 46 45 70 3d 9f dd e1 a8 9 ef 9 f8 aa 2 3a 
+RoundKey      : 7a 2a 70 20 e5 80 ef 8a f b 5 1 50 59 5a 53 
+AddRoundKey   : 28 a3 4a 20 17 1f d6 b8 d8 e6 ea 53 d8 20 3 69 
+InvMixColumns : 1e f8 a5 a2 55 47 58 2c bf cf 98 6f 1c 37 f8 41 
+
+Round 9: 
+InvShiftRows  : 1e 37 98 2c 55 f8 f8 6f bf 47 a5 41 1c cf 58 a2 
+InvSubBytes   : e9 b2 e2 42 ed e1 e1 6 f4 16 29 f8 c4 5f 5e 1a 
+RoundKey      : 35 50 5a 50 17 65 6f 65 e 4 e 4 3 9 3 9 
+AddRoundKey   : dc a5 ec 41 bd 84 e5 f ae 79 27 fb 94 3a 5a 13 
+InvMixColumns : c0 a4 43 f3 a5 4d 40 7b 5a a8 c5 3c 58 c0 43 3c 
+
+Final Round:
+InvShiftRows : c0 c0 c5 7b a5 a4 43 3c 5a 4d 43 3c 58 a8 40 f3 
+InvSubBytes  : 1f 1f 7 3 29 1d 64 6d 46 65 64 6d 5e 6f 72 7e 
+RoundKey     : 53 70 69 64 65 72 a a a a a a a a a a 1f 1f 7 3 29 1d 64 6d 46 65 64 6d 5e 6f 72 7e 
+AddRoundKey  : 4c 6f 6e 67 4c 6f 6e 67 4c 6f 6e 67 54 65 78 74 
+
+Final State   : 4c 6f 6e 67 4c 6f 6e 67 4c 6f 6e 67 54 65 78 74 
+
+Initial Round: 
+Inisial State  :6 36 94 8d fd 1f 45 1 e 74 c 2e 61 20 91 dd 
+FirstRoundKey  : a6 c0 68 ea 5d 8b 2c 28 33 b7 c c7 5f 6a 12 70 
+State          :a0 f6 fc 67 a0 94 69 29 3d c3 0 e9 3e 4a 83 ad 
+
+Round 1: 
+InvShiftRows  : a0 4a 0 29 a0 f6 83 e9 3d 94 fc ad 3e c3 69 67 
+InvSubBytes   : 47 5c 52 4c 47 d6 41 eb 8b e7 55 18 d1 33 e4 a 
+RoundKey      : 51 fb 6e 6c b2 4b 3c dd c1 44 20 1e ba c2 ef b7 
+AddRoundKey   : 16 ee 93 f6 bc 9d 5 29 e5 db 75 f7 bd ee fa bd 
+InvMixColumns : c6 6d 62 54 49 35 ea 9b c4 7 37 48 a8 25 c7 5e 
+
+Round 2: 
+InvShiftRows  : c6 25 37 9b 49 6d c7 48 c4 35 62 5e a8 7 ea 54 
+InvSubBytes   : c7 c2 b2 e8 a4 b3 31 d4 88 d9 ab 9d 6f 38 bb fd 
+RoundKey      : b2 aa 95 2 0 f9 77 e1 ab 85 64 3e cd 78 2d 58 
+AddRoundKey   : 75 c2 19 25 e 4a b4 ac 1d ae cf b0 6d d9 85 a5 
+InvMixColumns : 14 61 75 8b d2 92 d0 cc f3 e2 a2 7f cb d2 10 9d 
+
+Round 3: 
+InvShiftRows  : 14 d2 a2 cc d2 61 10 7f f3 92 75 9d cb e2 d0 8b 
+InvSubBytes   : 9b 7f 1a 27 7f d8 7c 6b 7e 74 3f 75 59 3b 60 ce 
+RoundKey      : a2 18 3f 97 be f9 8e 96 36 2e e1 5a 45 b5 55 75 
+AddRoundKey   : 39 c1 2c 62 67 21 52 de 41 fa de 20 ce ad 3a bb 
+InvMixColumns : f7 cb 95 1f ff d6 45 a6 3d ac 28 fc 46 73 6d ba 
+
+Round 4: 
+InvShiftRows  : f7 73 28 a6 ff cb 6d fc 3d d6 95 ba 46 ac 45 1f 
+InvSubBytes   : 26 8f ee c5 7d 59 b3 55 8b 4a ad c0 98 aa 68 cb 
+RoundKey      : 4f ba 27 a8 54 47 77 18 81 18 cf bb 87 f0 e0 20 
+AddRoundKey   : 69 db 6f 42 c7 1e ab a5 ac 3d 62 20 30 b2 d3 eb 
+InvMixColumns : 5 f1 26 4d f0 80 29 8e 91 e6 e2 46 93 12 1f 24 
+
+Round 5: 
+InvShiftRows  : 5 12 e2 8e f0 f1 1f 46 91 80 26 24 93 e6 29 4d 
+InvSubBytes   : 36 39 3b e6 17 2b cb 98 ac 3a 23 a6 22 f5 4c 65 
+RoundKey      : c7 f5 9d 8f c6 13 30 6f 3b 99 d7 74 f4 77 10 c0 
+AddRoundKey   : f1 ff 0 12 e2 38 52 ef 31 a f4 b6 ad 9a 38 a5 
+InvMixColumns : f8 7f 31 aa c9 ef b7 f6 e2 b7 d5 f9 2c b4 f6 c4 
+
+Round 6: 
+InvShiftRows  : f8 b4 d5 f6 c9 7f f6 f9 e2 ef 31 c4 2c b7 b7 aa 
+InvSubBytes   : e1 c6 b5 d6 12 6b d6 69 3b 61 2e 88 42 20 20 62 
+RoundKey      : 18 32 68 12 cc d5 23 5f 4b a2 4e a3 3d 83 67 d0 
+AddRoundKey   : f9 a fe eb 20 be 74 ea 53 42 60 ef 50 7f 83 b2 
+InvMixColumns : 8f c7 5f f1 4c 7a 18 2e bf 86 ab c 81 6b 6e 9a 
+
+Round 7: 
+InvShiftRows  : 8f 6b ab 2e 4c c7 6e c bf 7a 5f 9a 81 86 18 f1 
+InvSubBytes   : 73 5 e c3 5d 31 45 81 f4 bd 84 37 91 dc 34 2b 
+RoundKey      : 0 2a 5a 7a 99 19 f6 7c e2 e9 ec ed e7 be e4 b7 
+AddRoundKey   : 73 9c ec 24 77 28 ac 3f ae 4b 68 d3 eb a0 d9 9c 
+InvMixColumns : f8 ae 29 58 7e 91 26 5 d2 c3 a8 e7 cb dc e5 fc 
+
+Round 8: 
+InvShiftRows  : f8 dc a8 5 7e ae e5 e7 d2 91 29 fc cb c3 26 58 
+InvSubBytes   : e1 93 6f 36 8a be 2a b0 7f ac 4c 55 59 33 23 5e 
+RoundKey      : 7a 2a 70 20 e5 80 ef 8a f b 5 1 50 59 5a 53 
+AddRoundKey   : 9b 76 60 66 a0 3e 21 e9 f 43 49 f 79 b9 22 d 
+InvMixColumns : 69 e8 5f 35 65 a1 48 da ce 26 9c 7e 43 a4 dd d5 
+
+Round 9: 
+InvShiftRows  : 69 a4 9c da 65 e8 dd 7e ce a1 5f d5 43 26 48 35 
+InvSubBytes   : e4 1d 1c 7a bc c8 c9 8a ec f1 84 b5 64 23 d4 d9 
+RoundKey      : 35 50 5a 50 17 65 6f 65 e 4 e 4 3 9 3 9 
+AddRoundKey   : d1 a 12 79 ec ad cd 83 b6 9e 8a b6 34 46 d0 d0 
+InvMixColumns : 1a aa a2 a2 9d a2 a2 92 a2 a2 b6 a2 a2 d0 a2 a2 
+
+Final Round:
+InvShiftRows : 1a d0 b6 92 9d aa a2 a2 a2 a2 a2 a2 a2 a2 a2 a2 
+InvSubBytes  : 43 60 79 74 75 62 1a 1a 1a 1a 1a 1a 1a 1a 1a 1a 
+RoundKey     : 53 70 69 64 65 72 a a a a a a a a a a 43 60 79 74 75 62 1a 1a 1a 1a 1a 1a 1a 1a 1a 1a 
+AddRoundKey  : 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 
+
+Final State   : 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 </div></div></div></div><div class="inlineWrapper"><div  class = 'S8'><span style="white-space: pre;"><span>decryptedInts = decryptedInts(:);</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">if </span><span>range(decryptedInts(end-decryptedInts(end)+1:end)) == 0</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span>    fprintf(</span><span style="color: rgb(160, 32, 240);">"Decryption successful!\nPlain text: %s"</span><span>, </span><span style="color: rgb(0, 0, 255);">...</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span>        char(decryptedInts(1:end-decryptedInts(end))));</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">else</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span>    fprintf(</span><span style="color: rgb(160, 32, 240);">"Decryption failed :("</span><span>);</span></span></div></div><div class="inlineWrapper outputs"><div  class = 'S12'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">end</span></span></div><div  class = 'S7'><div class="inlineElement eoOutputWrapper embeddedOutputsTextElement" uid="341ECFDD" data-scroll-top="null" data-scroll-left="null" contenteditable="false" data-testid="output_9" style="width: 1020px; max-height: 261px;" data-width="990" data-height="31" data-hashorizontaloverflow="false"><div class="textElement">Decryption successful!
+Plain text: LongLonglongLongLongLongLongText</div></div></div></div></div><div  class = 'S16'></div></div>
+<br>
+<!-- 
+##### SOURCE BEGIN #####
+%% AES Algorithm
+% 
+% 
+% This script is an implementation of the AES Algorithm following Processing 
+% Standards Publication 197
+% 
+% <https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.197.pdf Link to original 
+% paper>
+%% 
+% 
+%% Configuration
+% 
+% 
+% Choose Key Standard: 
+
+keyProperties = 128
+config = Config();
+if keyProperties == 128
+    config.Nk = 4;
+    config.Nb = 4;
+    config.Nr = 10;
+elseif keyProperties == 192
+    config.Nk = 6;
+    config.Nb = 4;
+    config.Nr = 12;
+elseif keyProperties == 256
+    config.Nk = 8;
+    config.Nb = 4;
+    config.Nr = 14;
+end
+%% 
+% SBox configuration:
+
+sBoxConfig = "Test"
+if sBoxConfig == "Test"
+    config.sBox = TestSBox();
+    config.invSBox = TestInvSBox();
+elseif sBoxConfig == "Random"
+    % To change the random configuration, change the variables 
+    % in SBox.m and InvSBox.m files
+    config.sBox = SBox();
+    config.invSBox = InvSBox();
+end
+%% 
+% Enter the plaintext and cipherkey:
+
+plainText = "LongLonglongLongLongLongLongText"
+cipherKey = "Spider"
+textInts = uint8(char(plainText));
+nblocks = int32(length(textInts)) / (config.Nb * 4);
+npad = uint8(config.Nb * 4 ...
+    - (length(textInts) - config.Nb * 4 * nblocks));
+textInts = [textInts repmat(npad, 1, npad)]
+keyInts = uint8(char(cipherKey));
+npad = uint8(config.Nk*4 - length(keyInts));
+keyInts = [keyInts repmat(npad, 1, npad)]
+config.K = keyInts;
+%% 
+%% Encryption
+% 
+
+cipherText = [];
+for i = 1:(config.Nb * 4):length(textInts)
+    blob = Cipher( ...
+        textInts(i:i+config.Nb * 4-1), ...
+        config.K, ...
+        config.Nk, ...
+        config.Nb, ...
+        config.Nr ...
+    );
+    cipherText = [cipherText blob];
+end
+display(cipherText);
+%% 
+%% Decryption
+% 
+
+decryptedInts = []; 
+for i = 1:(config.Nb * 4):length(textInts)
+    decryptedBlob = InvCipher( ...
+        cipherText(i:i+config.Nb * 4-1), ...
+        config.K, ...
+        config.Nk, ...
+        config.Nb, ...
+        config.Nr ...
+    );
+    decryptedInts = [decryptedInts decryptedBlob];
+end
+decryptedInts = decryptedInts(:);
+if range(decryptedInts(end-decryptedInts(end)+1:end)) == 0
+    fprintf("Decryption successful!\nPlain text: %s", ...
+        char(decryptedInts(1:end-decryptedInts(end))));
+else
+    fprintf("Decryption failed :(");
+end
+%% 
+%
+##### SOURCE END #####
+--></body></html>
