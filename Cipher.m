@@ -1,7 +1,7 @@
 function [out] =  Cipher(in, K, Nk, Nb, Nr)
     in = reshape(in, Nb, 4);
     state = int32(in);
-    fprintf("\n\nInitial Round: \nInisial State  :");
+    fprintf("\n\nInitial Round: \nInitial State  :");
     fprintf("%0x ", state);
     fprintf("\n");
     w = KeyExpansion(K, Nk, Nb, Nr);
@@ -19,7 +19,7 @@ function [out] =  Cipher(in, K, Nk, Nb, Nr)
         fprintf("\nShiftRows     : ");
         state = ShiftRows(state);
         fprintf("%0x ", state);
-        fprintf("\nInvMixColumns : ");
+        fprintf("\nMixColumns    : ");
         state = MixColumns(state);
         fprintf("%0x ", state);
         fprintf("\nRoundKey      : ");
