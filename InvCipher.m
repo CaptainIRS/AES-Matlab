@@ -1,3 +1,16 @@
+%% Inverse Cipher
+% *Parameters:*
+% 
+% * |in| - Input
+% * |K|  - Cipher key in integer array format
+% * $N_k$ - Number of 32-bit words comprising the Cipher Key. For this 
+% standard, $N_k$ = 4, 6, or 8
+% * $N_b$ - Number of columns (32-bit words) comprising the State. For this
+% standard, $N_b$ = 4
+% * $N_r$ = Number of rounds, which is a function of $N_k$ and $N_b$ (which is 
+% fixed). For this standard, $N_r$ = 10, 12, or 14
+% 
+
 function [out] = InvCipher(in, K, Nk, Nb, Nr)
 
     w = KeyExpansion(K, Nk, Nb, Nr);
@@ -40,7 +53,6 @@ function [out] = InvCipher(in, K, Nk, Nb, Nr)
     fprintf("%0x ", state);
     fprintf("\nRoundKey     : ");
     fprintf("%0x ", w(1:Nb, :)');
-    fprintf("%0x ", state);
     fprintf("\nAddRoundKey  : ");
     state = AddRoundKey(state, w(1:Nb, :)', Nb);
     fprintf("%0x ", state);
